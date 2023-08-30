@@ -3,10 +3,10 @@
 
 class DB
 {
-    private $host = 'localhost';
-    private $user = 'root';
-    private $pass = 'root';
-    private $dbname = 'slim-api';
+    private $host = $_ENV["DB_HOST"];
+    private $user = $_ENV["DB_USER"];
+    private $pass = $_ENV["DB_PASSWORD"];
+    private $dbname = $_ENV["DB_NAME"];
 
     public function connect()
     {
