@@ -9,7 +9,7 @@ require __DIR__ . '/../config/db.php';
 
 $app = AppFactory::create();
 
-echo apache_getenv('NAME');
+echo 'My username is ' . $_ENV["NAME"] . '!';
 
 $app->get('/', function (Request $request, Response $response) {
     $response->getBody()->write("Hello, ");
