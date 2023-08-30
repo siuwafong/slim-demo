@@ -9,6 +9,8 @@ require __DIR__ . '/../config/db.php';
 
 $app = AppFactory::create();
 
+echo apache_getenv('NAME');
+
 $app->get('/', function (Request $request, Response $response) {
     $response->getBody()->write("Hello, ");
     return $response;
