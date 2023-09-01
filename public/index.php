@@ -3,22 +3,33 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Psr7\Response as MiddlewareResponse;
+
 
 require __DIR__ . '/../vendor/autoload.php';
-// require __DIR__ . '/../config/db.php';
+require __DIR__ . '/../config/db.php';
 
 $app = AppFactory::create();
-$app->setBasePath('/public');
+// (require __DIR__ . '/../config/bootstrap.php')->run();
 
-// Friends routes
-// require __DIR__ . '/../routes/friends.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
-echo 'My username is ' . $_ENV["NAME"] . '!';
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
 
-$app->get('/', function (Request $request, Response $response) {
-    $response->getBody()->write("Hello, ");
+$app->get('/{name}', function (Request $request, Response $response, array $args) {
+    $response->getBody()->write("Hello, " . "world");
     return $response;
 });
 
+// Friends routes
+require __DIR__ . '/../routes/friends.php';
+
+// Phones routes
+require __DIR__ . '/../routes/phones.php';
+
+// $app->add($beforeMiddleware);
 
 $app->run();

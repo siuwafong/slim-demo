@@ -9,6 +9,8 @@ $app = AppFactory::create();
 $app->get('/friends/all', function (Request $request, Response $response) {
     $sql = "SELECT * FROM friends";
 
+    print_r($_ENV["DB_HOST"]);
+
     try {
         $db = new DB();
         $conn = $db->connect();
@@ -31,13 +33,18 @@ $app->get('/friends/all', function (Request $request, Response $response) {
             ->withHeader('content-type', 'application/json')
             ->withStatus(500);
     }
-});
+})->setName('allFriends');
 
+
+$app->get('/friends/log', function (Request $request, Response $response, array $args) use ($app) {
+
+    $routeParser = $app->getRouteCollector()->getRouteParser();
+
+    echo $routeParser->urlFor('allFriends');
+});
 
 $app->get('/friends/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
-
-    echo ($id);
 
     $sql = "SELECT * FROM friends WHERE id = $id";
 
@@ -63,7 +70,7 @@ $app->get('/friends/{id}', function (Request $request, Response $response, array
             ->withHeader('content-type', 'application/json')
             ->withStatus(500);
     }
-});
+})->setName('individualFriend');
 
 $app->post('/friends/add', function (Request $request, Response $response, array $args) {
 

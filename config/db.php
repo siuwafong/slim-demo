@@ -1,19 +1,28 @@
 <?php
 
+class DB
+{
 
-// class DB
-// {
-//     private $host = $_ENV["DB_HOST"];
-//     private $user = $_ENV["DB_USER"];
-//     private $pass = $_ENV["DB_PASSWORD"];
-//     private $dbname = $_ENV["DB_NAME"];
+    private $host = null;
+    private $user = null;
+    private $pass = null;
+    private $dbname = null;
 
-//     public function connect()
-//     {
-//         $conn_str = "mysql:host=$this->host;dbname=$this->dbname";
-//         $conn = new PDO($conn_str, $this->user, $this->pass);
-//         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // environment variables need to be called in the constructor
+    function __construct()
+    {
+        $this->host = $_ENV["DB_HOST"];
+        $this->user = $_ENV["DB_USER"];
+        $this->pass = $_ENV["DB_PASSWORD"];
+        $this->dbname = $_ENV["DB_NAME"];
+    }
 
-//         return $conn;
-//     }
-// }
+    public function connect()
+    {
+        $conn_str = "mysql:host=$this->host;dbname=$this->dbname";
+        $conn = new PDO($conn_str, $this->user, $this->pass);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        return $conn;
+    }
+}
