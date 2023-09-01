@@ -23,8 +23,8 @@ $app->group('/phones', function (RouteCollectorProxy $group) {
 
         $response->getBody()->write(json_encode($phones));
 
-        $mgClient = Mailgun::create('90aa7fe68fc03d042f8956d15b257aa0-451410ff-586c50aa');
-        $domain = "sandbox09dc9fc33c78429c9dd65536c9a7096a.mailgun.org";
+        $mgClient = Mailgun::create($_ENV["MAILGUN_CLIENT"]);
+        $domain = $_ENV["MAILGUN_DOMAIN"];
 
         $result = $mgClient->messages()->send($domain, array(
             'from'    => 'Excited User <wilson@sandbox09dc9fc33c78429c9dd65536c9a7096a.mailgun.org>',
